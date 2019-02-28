@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "battleship_game/version"
+require "battleship/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "battleship_game"
-  spec.version       = BattleshipGame::VERSION
+  spec.version       = Battleship::VERSION
   spec.authors       = ["dave woodall"]
   spec.email         = ["github@davewoodall.com"]
 

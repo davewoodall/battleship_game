@@ -1,6 +1,6 @@
-require 'battleship_game/battleship_game'
+require 'battleship/game'
 
-RSpec.describe BattleshipGame::BattleshipGame do
+RSpec.describe Battleship::Game do
   let(:carrier) do
     {
       type: :carrier,
@@ -28,7 +28,7 @@ RSpec.describe BattleshipGame::BattleshipGame do
     }
   end
 
-  subject(:game) { BattleshipGame::BattleshipGame.new([carrier, battleship, submarine]) }
+  subject(:game) { Battleship::Game.new([carrier, battleship, submarine]) }
 
   context 'hits' do
     it 'strikes the beginning edge' do
@@ -55,17 +55,55 @@ RSpec.describe BattleshipGame::BattleshipGame do
   end
 
   context 'sinking' do
-    it 'sinks a ship' do
+    xit 'sinks a ship' do
       expect(subject.fire!('A6')).to eql :hit
       expect(subject.fire!('A7')).to eql :hit
       expect(subject.fire!('A8')).to eql :hit
       expect(subject.fire!('A9')).to eql :hit
       expect(subject.fire!('A9')).to eql :already_hit
+
       turn = subject.fire!('A10')
-
       expect(turn).to eql :sunk
-
       expect(subject.fire!('G9')).to eql :hit
     end
   end
+
+    context "Dave's temporary tests" do
+      it 'initializes with a board' do
+        result = subject.grid[0].length
+        expect = 10
+        expect(result).to eq(expect)
+      end
+
+      it 'get grid position' do
+        subject.grid[0][0] = 'boom'
+        result = subject.get('A1')
+        expect = 'boom'
+        expect(result).to eq(expect)
+      end
+
+      it 'set grid with content' do
+        subject.set('A1', 'pow')
+        result = subject.get('A1')
+        expect = 'pow'
+        expect(result).to eq(expect)
+      end
+
+      it 'get contents of position' do
+        pos = subject.get('I7')
+        expect(pos).to eq('s')
+      end
+
+      it 'there is a register of those ships' do
+        position = 'I7'
+        subject.get(position)
+        result = subject.register(position)
+        expect = :hit
+        expect(result).to eq(expect)
+      end
+
+      it 'record results'
+      it 'validates grid boundaries'
+      it 'validates grid overlap'
+    end
 end
