@@ -29,20 +29,26 @@ RSpec.describe Battleship::Board do
     describe 'getters and setters' do
       it 'get grid position' do
         subject.grid[0][0] = 'boom'
-        result = subject.get('A1')
+        result = subject.get_position('A1')
         expect = 'boom'
         expect(result).to eq(expect)
       end
 
       it 'set grid with content' do
-        subject.set('A1', 'pow')
-        result = subject.get('A1')
+        subject.set_position('A1', 'pow')
+        result = subject.get_position('A1')
         expect = 'pow'
         expect(result).to eq(expect)
       end
     end
 
     describe 'direction' do
+      before do
+        subject.add(submarine)
+      end
+
+      let(:subm) { subject.ships.first }
+
       it 'north goes up' do
         result = subject.point(submarine)
         expect = ["E7","E6","E5"]
@@ -50,8 +56,6 @@ RSpec.describe Battleship::Board do
       end
 
       it 'south goes down' do
-        result = subject.add(submarine)
-        subm = subject.get_ship(:submarine)
         subm[:direction] = :south
         result = subject.point(subm)
         expect = ["E7","E8","E9"]
@@ -59,8 +63,6 @@ RSpec.describe Battleship::Board do
       end
 
       it 'east goes right' do
-        result = subject.add(submarine)
-        subm = subject.get_ship(:submarine)
         subm[:direction] = :east
         result = subject.point(subm)
         expect = ["E7","F7","G7"]
@@ -68,8 +70,6 @@ RSpec.describe Battleship::Board do
       end
 
       it 'west goes left' do
-        result = subject.add(submarine)
-        subm = subject.get_ship(:submarine)
         subm[:direction] = :west
         result = subject.point(subm)
         expect = ["E7","D7","C7"]
@@ -82,7 +82,6 @@ RSpec.describe Battleship::Board do
         result = subject.ships
         expect(result).to eq([])
       end
-      it 'gets ships from game, passed in'
 
       it 'get ship coordinates' do
         subject.add(submarine)

@@ -8,6 +8,10 @@ module Battleship
       @ships = ships
     end
 
+    def coordinates(ship)
+      point(ship)
+    end
+
     def create_grid
       Array.new(10) do
         Array.new(10)
@@ -20,25 +24,25 @@ module Battleship
       end
     end
 
-    def get(pos)
+    def get_position(pos)
       row = get_row pos[1]
       col = get_column pos[0]
       row[col]
     end
 
-    def set(pos, item)
+    def set_position(pos, item)
       row = get_row pos[1]
       col = get_column pos[0]
       row[col] = item
     end
 
-    def get_column(col)
-      @columns.find { |c| c[0] === col }[1]
-    end
-
     def get_row(row)
       r = row.to_i - 1
       grid[r]
+    end
+
+    def get_column(col)
+      @columns.find { |c| c[0] === col }[1]
     end
 
     def add(ship)
@@ -90,22 +94,14 @@ module Battleship
       [ship[:position][0], ship[:position][1].to_i]
     end
 
-    def coordinates(ship)
-      point(ship)
-    end
-
     def place(ship)
       coordinates(ship).each do |pin|
-        set(pin, ship[:type][0])
+        set_position(pin, ship[:type][0])
       end
     end
 
     def place_ships
       @ships.map { |ship| place(ship) }
-    end
-
-    def get_ship(ship)
-      @ships.find { |s| s[:type] == ship }
     end
   end
 end

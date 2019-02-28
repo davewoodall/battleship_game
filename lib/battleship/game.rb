@@ -1,41 +1,26 @@
 module Battleship
   class Game
+    attr_reader :board, :ships, :state
 
-    attr_reader :board, :ships
-
-    def initialize(ships=[], board: Board)
+    def initialize(ships=[], board: Board, state: State)
       @board = board.new
       @ships = ships
-      place_ships
+      @state = state.new(@board, ships: @ships)
+      place_ships_on_board
+      record_ships_with_store
     end
 
-    def set(position, content)
-      board.set(position, content)
+    def fire!(position)
+      state.commit(position)
     end
 
-    def grid
-      @board.grid
-    end
-
-    def place_ships
+    def place_ships_on_board
       ships.each { |ship| board.add(ship) }
       board.place_ships
     end
 
-    def fire!(position)
-      register(position)
-    end
-
-    def get(position)
-      board.get(position)
-    end
-
-    def register(position)
-      if get(position)
-        :hit
-      else
-        :miss
-      end
+    def record_ships_with_store
+      state.log_ships
     end
   end
 end

@@ -55,7 +55,8 @@ RSpec.describe Battleship::Game do
   end
 
   context 'sinking' do
-    xit 'sinks a ship' do
+    it 'sinks a ship' do
+
       expect(subject.fire!('A6')).to eql :hit
       expect(subject.fire!('A7')).to eql :hit
       expect(subject.fire!('A8')).to eql :hit
@@ -67,43 +68,4 @@ RSpec.describe Battleship::Game do
       expect(subject.fire!('G9')).to eql :hit
     end
   end
-
-    context "Dave's temporary tests" do
-      it 'initializes with a board' do
-        result = subject.grid[0].length
-        expect = 10
-        expect(result).to eq(expect)
-      end
-
-      it 'get grid position' do
-        subject.grid[0][0] = 'boom'
-        result = subject.get('A1')
-        expect = 'boom'
-        expect(result).to eq(expect)
-      end
-
-      it 'set grid with content' do
-        subject.set('A1', 'pow')
-        result = subject.get('A1')
-        expect = 'pow'
-        expect(result).to eq(expect)
-      end
-
-      it 'get contents of position' do
-        pos = subject.get('I7')
-        expect(pos).to eq('s')
-      end
-
-      it 'there is a register of those ships' do
-        position = 'I7'
-        subject.get(position)
-        result = subject.register(position)
-        expect = :hit
-        expect(result).to eq(expect)
-      end
-
-      it 'record results'
-      it 'validates grid boundaries'
-      it 'validates grid overlap'
-    end
 end
